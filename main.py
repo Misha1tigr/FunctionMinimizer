@@ -11,6 +11,9 @@ if function_quantity < 1:
 input_quantity = int(input("Введіть кількість входів функцій: "))
 if input_quantity < 1:
     raise ValueError("Невірна кількість входів функцій")
+minimization_for = int(input("Введіть кінцеву форму: 1-ДДНФ, 0-ДКНФ: "))
+if minimization_for != 1 and minimization_for != 0:
+    raise ValueError("Тип мінімізації може бути лише 0 або 1")
 input_naming_type = int(input("Оберіть назви входів: 0-Ввести власноруч, 1-x1x2x3, 2-x3x2x1, 3-abc: "))
 input_names = []
 if input_naming_type == 0:
@@ -65,4 +68,9 @@ for i in range(pow(2, input_quantity)):
         rowValue.append(functionList[j].values[i])
     input_table.add_row(list(str(bin(i)[2:]).rjust(input_quantity, '0')) + rowValue)
 print(input_table)
-minimizer.minimize(functionList, minimization_type)
+if minimization_type == 1:
+    minimizer.kvain(input_names, functionList, minimization_for)
+elif minimization_type == 2:
+    minimizer.muck(input_names, functionList, minimization_for)
+elif minimization_type == 3:
+    minimizer.veich(input_names, functionList, minimization_for)
