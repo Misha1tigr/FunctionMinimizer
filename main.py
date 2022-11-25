@@ -1,15 +1,16 @@
 from prettytable import PrettyTable
+import minimizer
 
 print("Вітаю у застосунку для мінімізації функцій!")
 minimization_type = int(input("Оберіть тип мінімізації: 1-Квайн; 2-Мак-Класки; 3-Вейча: "))
 if minimization_type != 1 and minimization_type != 2 and minimization_type != 3:
-    raise ValueError("Неправильні вхідні дані")
+    raise ValueError("Невірний тип мінімізації")
 function_quantity = int(input("Введіть кількість функцій для мінімізації: "))
 if function_quantity < 1:
-    raise ValueError("Неправильні вхідні дані")
+    raise ValueError("Невірна кількість функцій")
 input_quantity = int(input("Введіть кількість входів функцій: "))
 if input_quantity < 1:
-    raise ValueError("Неправильні вхідні дані")
+    raise ValueError("Невірна кількість входів функцій")
 input_naming_type = int(input("Оберіть назви входів: 0-Ввести власноруч, 1-x1x2x3, 2-x3x2x1, 3-abc: "))
 input_names = []
 if input_naming_type == 0:
@@ -64,3 +65,4 @@ for i in range(pow(2, input_quantity)):
         rowValue.append(functionList[j].values[i])
     input_table.add_row(list(str(bin(i)[2:]).rjust(input_quantity, '0')) + rowValue)
 print(input_table)
+minimizer.minimize(functionList, minimization_type)
