@@ -29,29 +29,35 @@ else:
 
 
 class Function:
-    def __init__(self, inputs, values):
-        self.inputs = inputs
+    def __init__(self, values):
         self.values = values
 
     def __str__(self):
-        return "Входи: " + " ".join(["{}"] * len(self.inputs)).format(*self.inputs) + \
-               "; Значення: " + " ".join(["{}"] * len(self.values)).format(*self.values)
+        return "Значення: " + " ".join(["{}"] * len(self.values)).format(*self.values) + "\n"
+
+
+def input_function():
+    while True:
+        print(f"Введіть значення {f + 1} функції на усіх наборах через пробіл. "
+              "Якщо функція не визначена на наборі ставте мінус(-)")
+        output_values = input().split()
+        if len(output_values) != pow(2, input_quantity):
+            print("Ви не ввели усі значення функції")
+            continue
+        for item in output_values:
+            if item != "0" and item != "1" and item != "-":
+                print("Значення функції мають бути лише 0, 1 або -")
+                break
+        else:
+            return Function(output_values)
 
 
 functionList = []
 for f in range(function_quantity):
-    print(f"Введіть значення {f + 1} функції на усіх наборах через пробіл. "
-          "Якщо функція не визначена на наборі ставте мінус(-)")
-    output_values = input().split()
-    if len(output_values) != pow(2, input_quantity):
-        raise ValueError("Ви не ввели усі значення функції")
-    for item in output_values:
-        if item != "0" and item != "1" and item != "-":
-            raise ValueError("Значення функції мають бути лише 0, 1 або -")
-    functionList.append(Function(input_names, output_values))
+    functionList.append(input_function())
 # print(*functionList)  testing
 input_table = PrettyTable()
-input_table.field_names = functionList[0].inputs + list(f"f{i + 1}" for i in range(function_quantity))
+input_table.field_names = input_names + list(f"f{i + 1}" for i in range(function_quantity))
 for i in range(pow(2, input_quantity)):
     rowValue = []
     for j in range(function_quantity):
